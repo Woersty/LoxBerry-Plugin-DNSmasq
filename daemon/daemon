@@ -1,0 +1,191 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          DNSmasq
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: This file starts the Loxberry DNSmasq Plugin Config Daemon.
+# Description:       This file starts the Loxberry DNSmasq Plugin Config Daemon.
+### END INIT INFO
+
+PATH="/sbin:/bin:/usr/sbin:/usr/bin:/opt/loxberry/bin"
+PATH=$PATH.":/opt/loxberry/sbin"
+
+. /lib/lsb/init-functions
+
+### END INIT INFO
+
+# Version 1.0
+# 06.11.2016 13:32:17
+
+logfile="REPLACEBYBASEFOLDER/log/plugins/REPLACEBYSUBFOLDER/DNSmasq.log"
+INPUTFILE="/etc/init.d/dnsmasq"
+BACKUPFILE="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq_dnsmasq_init.backup"
+plugdnsmasq="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq_dnsmasq.cfg"
+plugleasefile="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq_leases.cfg"
+plughostsfile="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq_hosts.cfg"
+plugconfigfile="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq.cfg"
+flagfile="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/modify.me"
+
+if [ -r $flagfile ]
+then
+  touch $INPUTFILE
+  touch $plugdnsmasq
+  touch $plugleasefile
+  touch plughostsfile
+  touch $logfile
+  chown loxberry:loxberry $logfile
+  chmod 666 $logfile
+  chown root:root $plugleasefile
+  chmod 644 $plugleasefile
+  echo `date +"%b  %e %H:%M:%S "`"modify.me found. Installing DNSmasq Plugin."
+  echo `date +"%b  %e %H:%M:%S "`"modify.me found. Installing."                                                                                                         2>&1 >>$logfile
+  grep '#### Start LoxBerry-Plugin DNSmasq' $INPUTFILE >/dev/null
+  if [ $? -eq 0 ]
+  then
+   echo `date +"%b  %e %H:%M:%S "`"Plugin modification already done."                                                                                                   2>&1 >>$logfile
+  else
+   echo `date +"%b  %e %H:%M:%S "`"Copy content of /etc/dnsmasq.conf to $plugdnsmasq (w/o comments)"                                                                    2>&1 >>$logfile
+   egrep -v '^#|^[[:space:]]*$' /etc/dnsmasq.conf >> $plugdnsmasq
+   if [ $? -eq 0 ]
+   then
+    echo `date +"%b  %e %H:%M:%S "`"Content of /etc/dnsmasq.conf copied to $plugdnsmasq "                                                                               2>&1 >>$logfile
+   else
+    echo `date +"%b  %e %H:%M:%S "`"Cannot copy /etc/dnsmasq.conf content to $plugdnsmasq "                                                                             2>&1 >>$logfile
+   fi
+   echo `date +"%b  %e %H:%M:%S "`"Plugin modification not yet done, adapt $INPUTFILE"                                                                                  2>&1 >>$logfile
+   echo `date +"%b  %e %H:%M:%S "`"Backup $INPUTFILE to $BACKUPFILE "                                                                                                   2>&1 >>$logfile
+   cp $INPUTFILE $BACKUPFILE                                                                                                                                            2>&1 >>$logfile
+   LINENUM=$((`grep 'RESOLV_CONF=/var/run/dnsmasq/resolv.conf' $INPUTFILE -n|head -n1|cut -d: -f1` + 2))
+   LINESTR="\n#### Start LoxBerry-Plugin DNSmasq\n if [ -r "$plugdnsmasq" ] \n then \n dnsmasq --test --dhcp-leasefile=$plugleasefile --log-facility=$logfile --addn-hosts=$plughostsfile --conf-file=$plugdnsmasq >>$logfile 2>&1 \n if [ \$? -eq 0 ]\n then \n  echo $plugdnsmasq is VALID and used!! \n   DNSMASQ_OPTS=\"\$DNSMASQ_OPTS --dhcp-leasefile=$plugleasefile --log-facility=$logfile --addn-hosts=$plughostsfile --conf-file=$plugdnsmasq\"\n else \n echo $plugdnsmasq is INVALID and NOT used!! \n  fi \n fi \n#### End LoxBerry-Plugin DNSmasq\n"
+   echo `date +"%b  %e %H:%M:%S "`"Remove older /tmp/LoxBerry_DNSmasq_plugin_tmp file if existent "                                                                     2>&1 >>$logfile
+   rm -f /tmp/LoxBerry_DNSmasq_plugin_tmp                                                                                                                               2>&1 >>$logfile
+   echo `date +"%b  %e %H:%M:%S "`"Adapt $INPUTFILE to use the LoxBerry DNSmasq-Plugin Config "                                                                         2>&1 >>$logfile
+   awk -v "n=$LINENUM" -v "s=$LINESTR" '
+      (NR==n) { n=-1 ; print s >"/tmp/LoxBerry_DNSmasq_plugin_tmp"}
+              { print $0 >>"/tmp/LoxBerry_DNSmasq_plugin_tmp"}
+          END { if (n>0) print s >>"/tmp/LoxBerry_DNSmasq_plugin_tmp"}'  $INPUTFILE
+   cat /tmp/LoxBerry_DNSmasq_plugin_tmp > $INPUTFILE
+   echo `date +"%b  %e %H:%M:%S "`"Remove /tmp/LoxBerry_DNSmasq_plugin_tmp file "                                                                                       2>&1 >>$logfile
+   rm -f /tmp/LoxBerry_DNSmasq_plugin_tmp                                                                                                                               2>&1 >>$logfile
+   echo `date +"%b  %e %H:%M:%S "`"Adapt rights / owner for files in REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/ "                                           2>&1 >>$logfile
+   chown loxberry:loxberry REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq*                                                                               2>&1 >>$logfile
+   chmod 644 REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq*                                                                                             2>&1 >>$logfile
+   echo `date +"%b  %e %H:%M:%S "`"Adaptation completed"                                                                                                                2>&1 >>$logfile
+  fi
+  echo `date +"%b  %e %H:%M:%S "`"Check, if DNSmasq Control Daemon is running"                                                                                          2>&1 >>$logfile
+  CS_PID=`ps -ef|grep "dnsmasq/bin/server_control.pl"|grep -v grep |awk -F" " '{ print $2 }'`                                                                           2>&1 >>$logfile
+  if [ -z "$CS_PID" ]
+  then
+    echo `date +"%b  %e %H:%M:%S "`"Process not found, try to start DNSmasq Control Daemon"                                                                             2>&1 >>$logfile
+    REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/server_control.pl                                                                                2>&1 >>$logfile &
+    if [ $? -eq 0 ]
+    then
+      echo `date +"%b  %e %H:%M:%S "`"DNSmasq Control Daemon restart successfully completed."                                                                           2>&1 >>$logfile
+    else
+      echo `date +"%b  %e %H:%M:%S "`"DNSmasq Control Daemon cannot be started. That's bad. Check the logfile!"                                                         2>&1 >>$logfile
+    fi
+  else
+    echo `date +"%b  %e %H:%M:%S "`"Process ID $CS_PID found, no action"                                                                                                2>&1 >>$logfile
+  fi
+  echo `date +"%b  %e %H:%M:%S "`"Try to read DNSmasq Version "                                                                                                         2>&1 >>$logfile
+  /usr/sbin/dnsmasq -v |grep Copy                                                                                                                                       2>&1 >>$logfile
+  if [ $? -eq 0 ]
+  then
+    echo `date +"%b  %e %H:%M:%S "`"DNSmasq Version successfully read"                                                                                                  2>&1 >>$logfile
+    echo `date +"%b  %e %H:%M:%S "`"Removing $flagfile"                                                                                                                 2>&1 >>$logfile
+    rm $flagfile                                                                                                                                                        2>&1 >>$logfile
+    echo -n `date +"%b  %e %H:%M:%S "`"Check config, if DNSmasq is enabled"                                                                                             2>&1 >>$logfile
+    grep "DNSMASQ_USE=on" $plugconfigfile                                                                                                                               2>&1 >>$logfile
+    if [ $? -ne 0 ]
+    then
+      echo `date +"%b  %e %H:%M:%S "`"DNSmasq is not enabled."                                                                                                          2>&1 >>$logfile
+      service dnsmasq stop                                                                                                                                              2>&1 >>$logfile
+      exit 0
+    else
+      echo `date +"%b  %e %H:%M:%S "`"DNSmasq is enabled."                                                                                                              2>&1 >>$logfile
+      echo `date +"%b  %e %H:%M:%S "`"Try to restart DNSmasq"                                                                                                           2>&1 >>$logfile
+      service dnsmasq stop                                                                                                                                              2>&1 >>$logfile
+      echo `date +"%b  %e %H:%M:%S "`"Search for other DHCP Servers "                                                                                                   2>&1 >>$logfile
+      CHK_DHCP=`nmap --script broadcast-dhcp-discover 2>&1 |grep \| |grep -v "WARNING: No"`                                                                             2>&1 >>$logfile
+      echo $CHK_DHCP | tr '|' '\n' |grep "Server Identifier" 2>&1 >/dev/null
+      if [ $? -eq 0 ]
+      then
+        echo `date +"%b  %e %H:%M:%S "`"****************************************************"                                                                           2>&1 >>$logfile
+        echo `date +"%b  %e %H:%M:%S "`"*               ! ! W A R N I N G ! !              *"                                                                           2>&1 >>$logfile
+        echo `date +"%b  %e %H:%M:%S "`"*             Other DHCP Server detected!          *"                                                                           2>&1 >>$logfile
+        echo `date +"%b  %e %H:%M:%S "`"****************************************************"                                                                           2>&1 >>$logfile
+        echo $CHK_DHCP | tr '|' '\n'                                                                                                                                    2>&1 >>$logfile
+        echo `date +"%b  %e %H:%M:%S "`"dnsmasq will be started but you should check this!!"                                                                            2>&1 >>$logfile
+      fi
+      service dnsmasq start                                                                                                                                             2>&1 >>$logfile
+      if [ $? -eq 0 ]
+      then
+        echo `date +"%b  %e %H:%M:%S "`"Restart successful completed."                                                                                                  2>&1 >>$logfile
+        exit 0
+      else
+        echo `date +"%b  %e %H:%M:%S "`"dnsmasq cannot be started. That's bad."                                                                                         2>&1 >>$logfile
+      fi
+    fi
+  else
+    echo `date +"%b  %e %H:%M:%S "`"dnsmasq Version cannot be read. That's bad."                                                                                        2>&1 >>$logfile
+  fi
+else
+  echo `date +"%b  %e %H:%M:%S "`"modify.me not found. Plugin modification already done. Try to start DNSmasq-Plugin."
+  echo `date +"%b  %e %H:%M:%S "`"Plugin modification already done."                                                                                                    2>&1 >>$logfile
+  echo `date +"%b  %e %H:%M:%S "`"Check, if DNSmasq Control Daemon is running"                                                                                          2>&1 >>$logfile
+  CS_PID=`ps -ef|grep "dnsmasq/bin/server_control.pl"|grep -v grep |awk -F" " '{ print $2 }'`                                                                           2>&1 >>$logfile
+  if [ -z "$CS_PID" ]
+  then
+    echo `date +"%b  %e %H:%M:%S "`"Process not found, try to start DNSmasq Control Daemon"                                                                             2>&1 >>$logfile
+    REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/server_control.pl                                                                                2>&1 >>$logfile &
+    if [ $? -eq 0 ]
+    then
+      echo `date +"%b  %e %H:%M:%S "`"DNSmasq Control Daemon restart successfully completed."                                                                           2>&1 >>$logfile
+    else
+      echo `date +"%b  %e %H:%M:%S "`"DNSmasq Control Daemon cannot be started. That's bad. Check the logfile!"                                                         2>&1 >>$logfile
+    fi
+  else
+    echo `date +"%b  %e %H:%M:%S "`"Process ID $CS_PID found, no action"                                                                                                2>&1 >>$logfile
+  fi
+  echo `date +"%b  %e %H:%M:%S "`"Check config, if DNSmasq is enabled"                                                                                                  2>&1 >>$logfile
+  grep "DNSMASQ_USE=on" $plugconfigfile                                                                                                                                 2>&1 >>$logfile
+  if [ $? -ne 0 ]
+  then
+    echo `date +"%b  %e %H:%M:%S "`"DNSmasq is not enabled."                                                                                                            2>&1 >>$logfile
+    echo `date +"%b  %e %H:%M:%S "`"DNSmasq is not enabled."
+    service dnsmasq stop                                                                                                                                                2>&1 >>$logfile
+    exit 0
+  else
+    echo `date +"%b  %e %H:%M:%S "`"DNSmasq is enabled."                                                                                                                2>&1 >>$logfile
+    echo `date +"%b  %e %H:%M:%S "`"Try to restart DNSmasq"                                                                                                             2>&1 >>$logfile
+    service dnsmasq stop                                                                                                                                                2>&1 >>$logfile
+    echo `date +"%b  %e %H:%M:%S "`"Search for other DHCP Servers "                                                                                                     2>&1 >>$logfile
+    CHK_DHCP=`nmap --script broadcast-dhcp-discover 2>&1 |grep \| |grep -v "WARNING: No"`                                                                               2>&1 >>$logfile
+    echo $CHK_DHCP | tr '|' '\n' |grep "Server Identifier" 2>&1 >/dev/null
+    if [ $? -eq 0 ]
+    then
+      echo `date +"%b  %e %H:%M:%S "`"****************************************************"                                                                             2>&1 >>$logfile
+      echo `date +"%b  %e %H:%M:%S "`"*               ! ! W A R N I N G ! !              *"                                                                             2>&1 >>$logfile
+      echo `date +"%b  %e %H:%M:%S "`"*             Other DHCP Server detected!          *"                                                                             2>&1 >>$logfile
+      echo `date +"%b  %e %H:%M:%S "`"****************************************************"                                                                             2>&1 >>$logfile
+      echo $CHK_DHCP | tr '|' '\n'                                                                                                                                      2>&1 >>$logfile
+      echo `date +"%b  %e %H:%M:%S "`"dnsmasq will be started but you should check this!!"                                                                              2>&1 >>$logfile
+    fi
+    service dnsmasq start                                                                                                                                               2>&1 >>$logfile
+    if [ $? -eq 0 ]
+    then
+      echo `date +"%b  %e %H:%M:%S "`"Restart successful completed."                                                                                                    2>&1 >>$logfile
+      echo `date +"%b  %e %H:%M:%S "`"Restart successful completed."
+      exit 0
+    else
+      echo `date +"%b  %e %H:%M:%S "`"dnsmasq cannot be started. That's bad."                                                                                           2>&1 >>$logfile
+    fi
+  fi
+fi
+
+# When arriving here, something goes wrong
+echo `date +"%b  %e %H:%M:%S "`"Oh oh, I had problems. Please read the Plugin-Logfile for details."                                                                     2>&1 >>$logfile
+echo `date +"%b  %e %H:%M:%S "`"Oh oh, I had problems. Please read the Plugin-Logfile for details."
+exit 0
