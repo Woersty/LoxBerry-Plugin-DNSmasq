@@ -290,7 +290,7 @@
                           {
                             '<!--$TXT_BTN_CHECK_CFG_DIALOG_CHECK-->': function ()
                             {
-                              $('#dialog').html('<center><br/><br/><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div><!--$TXT_PLEASE_WAIT--><br/><br/><br/>');
+                              $('#dialog').html('<center><br/><br/><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div></div><!--$TXT_PLEASE_WAIT--><br/><br/><br/>');
                               $.ajax(
                               {
                                 type: "POST",
@@ -330,7 +330,7 @@
                                     $('#dialog').html('<table><tr><td><img src="/plugins/<!--$psubfolder-->/ico_chk_'+test_result[1]+'.png"></td><td><!--$TXT_OK_CFG_CHK--><br/><br/><span class="dnsmasq_param_ok"><b>'+test_result[0]+'</b></span><br/><br/></td></tr></table>');
                                     if ( save == 1 )
                                     {
-                                      $('#dialog').html('<table><tr><td rowspan="2"><img src="/plugins/<!--$psubfolder-->/ico_chk_'+test_result[1]+'.png"></td><td align="center"><!--$TXT_OK_CFG_CHK--><br/><br/><span class="dnsmasq_param_ok"><b>'+test_result[0]+'</b></span><br/><br/></td></tr><tr><td align="center"><!--$TXT_SAVE_DIALOG--><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div><!--$TXT_PLEASE_WAIT--></td></tr></table>');
+                                      $('#dialog').html('<table><tr><td rowspan="2"><img src="/plugins/<!--$psubfolder-->/ico_chk_'+test_result[1]+'.png"></td><td align="center"><!--$TXT_OK_CFG_CHK--><br/><br/><span class="dnsmasq_param_ok"><b>'+test_result[0]+'</b></span><br/><br/></td></tr><tr><td align="center"><!--$TXT_SAVE_DIALOG--><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div></div><!--$TXT_PLEASE_WAIT--></td></tr></table>');
                                     	$('.ui-dialog-buttonpane button:contains("<!--$TXT_BTN_CHECK_CFG_DIALOG_CHECK-->")').button().hide();
                                     	setTimeout( function() 
                                       { 
