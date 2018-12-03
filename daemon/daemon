@@ -9,31 +9,31 @@
 # Description:       This file starts the Loxberry DNSmasq Plugin Config Daemon.
 ### END INIT INFO
 
-PATH="/sbin:/bin:/usr/sbin:/usr/bin:/opt/loxberry/bin"
-PATH=$PATH.":/opt/loxberry/sbin"
+PATH="/sbin:/bin:/usr/sbin:/usr/bin:REPLACELBHOMEDIR/bin"
+PATH=$PATH.":REPLACELBHOMEDIR/sbin"
 
 . /lib/lsb/init-functions
 
 ### END INIT INFO
 
-# Version 1.0
-# 06.11.2016 13:32:17
+# Version 2018.12.03
+# 03.12.2018 22:58:55
 
-logfile="REPLACEBYBASEFOLDER/log/plugins/REPLACEBYSUBFOLDER/DNSmasq.log"
+logfile="REPLACELBPLOGDIR/DNSmasq.log"
 INPUTFILE="/etc/init.d/dnsmasq"
-BACKUPFILE="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq_dnsmasq_init.backup"
-plugdnsmasq="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq_dnsmasq.cfg"
-plugleasefile="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq_leases.cfg"
-plughostsfile="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq_hosts.cfg"
-plugconfigfile="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq.cfg"
-flagfile="REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/modify.me"
+BACKUPFILE="REPLACELBPCONFIGDIR/DNSmasq_dnsmasq_init.backup"
+plugdnsmasq="REPLACELBPCONFIGDIR/DNSmasq_dnsmasq.cfg"
+plugleasefile="REPLACELBPCONFIGDIR/DNSmasq_leases.cfg"
+plughostsfile="REPLACELBPCONFIGDIR/DNSmasq_hosts.cfg"
+plugconfigfile="REPLACELBPCONFIGDIR/DNSmasq.cfg"
+flagfile="REPLACELBPCONFIGDIR/modify.me"
 
 if [ -r $flagfile ]
 then
   touch $INPUTFILE
   touch $plugdnsmasq
   touch $plugleasefile
-  touch plughostsfile
+  touch $plughostsfile
   touch $logfile
   chown loxberry:loxberry $logfile
   chmod 666 $logfile
@@ -69,9 +69,9 @@ then
    cat /tmp/LoxBerry_DNSmasq_plugin_tmp > $INPUTFILE
    echo `date +"%b  %e %H:%M:%S "`"Remove /tmp/LoxBerry_DNSmasq_plugin_tmp file "                                                                                       2>&1 >>$logfile
    rm -f /tmp/LoxBerry_DNSmasq_plugin_tmp                                                                                                                               2>&1 >>$logfile
-   echo `date +"%b  %e %H:%M:%S "`"Adapt rights / owner for files in REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/ "                                           2>&1 >>$logfile
-   chown loxberry:loxberry REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq*                                                                               2>&1 >>$logfile
-   chmod 644 REPLACEBYBASEFOLDER/config/plugins/REPLACEBYSUBFOLDER/DNSmasq*                                                                                             2>&1 >>$logfile
+   echo `date +"%b  %e %H:%M:%S "`"Adapt rights / owner for files in REPLACELBPCONFIGDIR "                                           2>&1 >>$logfile
+   chown loxberry:loxberry REPLACELBPCONFIGDIR/DNSmasq*                                                                               2>&1 >>$logfile
+   chmod 644 REPLACELBPCONFIGDIR/DNSmasq*                                                                                             2>&1 >>$logfile
    echo `date +"%b  %e %H:%M:%S "`"Adaptation completed"                                                                                                                2>&1 >>$logfile
   fi
   echo `date +"%b  %e %H:%M:%S "`"Check, if DNSmasq Control Daemon is running"                                                                                          2>&1 >>$logfile
@@ -79,7 +79,7 @@ then
   if [ -z "$CS_PID" ]
   then
     echo `date +"%b  %e %H:%M:%S "`"Process not found, try to start DNSmasq Control Daemon"                                                                             2>&1 >>$logfile
-    REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/server_control.pl                                                                                2>&1 >>$logfile &
+    REPLACELBPHTMLAUTHDIR/bin/server_control.pl                                                                                2>&1 >>$logfile &
     if [ $? -eq 0 ]
     then
       echo `date +"%b  %e %H:%M:%S "`"DNSmasq Control Daemon restart successfully completed."                                                                           2>&1 >>$logfile
@@ -139,7 +139,7 @@ else
   if [ -z "$CS_PID" ]
   then
     echo `date +"%b  %e %H:%M:%S "`"Process not found, try to start DNSmasq Control Daemon"                                                                             2>&1 >>$logfile
-    REPLACEBYBASEFOLDER/webfrontend/cgi/plugins/REPLACEBYSUBFOLDER/bin/server_control.pl                                                                                2>&1 >>$logfile &
+    REPLACELBPHTMLAUTHDIR/bin/server_control.pl                                                                                2>&1 >>$logfile &
     if [ $? -eq 0 ]
     then
       echo `date +"%b  %e %H:%M:%S "`"DNSmasq Control Daemon restart successfully completed."                                                                           2>&1 >>$logfile
