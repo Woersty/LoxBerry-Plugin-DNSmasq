@@ -1,50 +1,57 @@
+				<center>
+				</center>
+				<br>
+				<div id="notifblock">
+					<!-- NOTIFICATIONS //-->
+					<TMPL_VAR NOTIFICATIONS>
+					<!-- NOTIFICATIONS //-->
+				</div>
+
+
+
+
                   <div id="dialog"></div>
-                  <script type="text/javascript" src="/plugins/<!--$psubfolder-->/jquery-ui-1.9.2.custom.min.js"></script>
-                  <script type="text/javascript" src="/plugins/<!--$psubfolder-->/jquery.numberedtextarea.js"></script>
-                  <script type="text/javascript" src="/plugins/<!--$psubfolder-->/jquery.extend.js"></script>
-                  <script type="text/javascript" src="/plugins/<!--$psubfolder-->/base64.js"></script>
-                  <link   type="text/css" rel="stylesheet" href="/plugins/<!--$psubfolder-->/style.css">
+                  <script type="text/javascript" src="/plugins/<TMPL_VAR LBPPLUGINDIR>/jquery-ui-1.9.2.custom.min.js"></script>
+                  <script type="text/javascript" src="/plugins/<TMPL_VAR LBPPLUGINDIR>/jquery.numberedtextarea.js"></script>
+                  <script type="text/javascript" src="/plugins/<TMPL_VAR LBPPLUGINDIR>/jquery.extend.js"></script>
+                  <script type="text/javascript" src="/plugins/<TMPL_VAR LBPPLUGINDIR>/base64.js"></script>
+                  <link   type="text/css" rel="stylesheet" href="/plugins/<TMPL_VAR LBPPLUGINDIR>/style.css">
                   <center>
                     <table width="100%" style="background: rgba(255,255,192, 0.4); border-radius: 5px; border: 1px solid #7e7e7e; ">
                       <tr>
                         <td width="250px"></td>
                         <td width="200px"></td>
-                        <td align="center"><img src="/system/images/icons/<!--$psubfolder-->/icon_64.png"><br/><b><!--$MY_NAME--></b><br/><small><!--$PLUGIN_DESCRIPTION--></small></td>
-                        <td width="200px">
-                          <a style="width:150px;" id="btnshwlog" data-icon="info"    data-role="button" data-mini="true" target="log" href="/plugins/<!--$psubfolder-->/?mode=show_logfile"><!--$TXT_BTN_SHOW_LOG--></a>
-                          <a style="width:150px;" id="btndwllog" data-icon="arrow-d" data-role="button" data-mini="true" target="_self" href="/plugins/<!--$psubfolder-->/?mode=download_logfile"><!--$TXT_BTN_DOWNLOAD_LOG--></a>
-                          <a style="width:150px;" id="btndwllog" data-icon="delete"  data-role="button" data-mini="true" target="_self" onclick="ConfirmDialog('<br/><br/><table><tr><td><img src=\'/plugins/<!--$psubfolder-->/ico_delete.png\'></td><td><!--$TXT_EMPTY_LOG_DIALOG_TEXT--></td></tr></table><br/>','<!--$MY_NAME--> - <!--$TXT_EMPTY_LOG_DIALOG_TITLE-->');"><!--$TXT_BTN_EMPTY_LOG--></a>
-                        </td>
+                        <td align="center"><img src="<TMPL_VAR LOGO_ICON>" width="64" height="64"><br><b><TMPL_VAR ADMIN.MY_NAME></b><br/><small><TMPL_VAR ADMIN.PLUGIN_DESCRIPTION></small></td>
                         <td width="250px" align="center">
                           <table style="background-color: #ffffc0; border-radius: 5px; border: 1px solid #7e7e7e;">
                             <tr>
                               <td align="center" colspan="2">
-                                <div id="controlstat"><img width='40' height='40' src='../../../plugins/<!--$psubfolder-->/DNSMASQ_STATUS_UNKNOWN.png'></div>
+                                <div id="controlstat"><img width='40' height='40' src='../../../plugins/<TMPL_VAR LBPPLUGINDIR>/DNSMASQ_STATUS_UNKNOWN.png'></div>
                               </td>
                             </tr>
                             <tr>
                               <td align="center" colspan="2">
-                                <i><small><nobr><!--$TXT_DNSMASQ_CONTROL--></nobr></small></i>
+                                <i><small><nobr><TMPL_VAR ADMIN.TXT_DNSMASQ_CONTROL></nobr></small></i>
                               </td>
                             </tr>
                             <tr>
                               <td align="right">
-                                <nobr><small><!--$TXT_LABEL_DNSMASQ_CONTROL_PORT--></small></nobr>
+                                <nobr><small><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_CONTROL_PORT></small></nobr>
                               </td>
                               <td>
-                                <div class='editable dnsmasq_param_ok' contenteditable='true' style='text-align:center; width:50px; padding:2px; border: 1px solid #7e7e7e; border-radius: 5px; font-weight: bold; background-color: #ffffff; ' name='CONTROL_PORT_div' id='CONTROL_PORT_div'><!--$CONTROL_PORT--></div>
+                                <div class='editable dnsmasq_param_ok' contenteditable='true' style='text-align:center; width:50px; padding:2px; border: 1px solid #7e7e7e; border-radius: 5px; font-weight: bold; background-color: #ffffff; ' name='CONTROL_PORT' id='CONTROL_PORT_div'><TMPL_VAR CONTROL_PORT></div>
                               </td>
                             </tr>
                             <tr>
                               <td align="right">
-                              	<nobr><small><!--$TXT_LABEL_DNSMASQ_USE--></small></nobr>
+                              	<nobr><small><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_USE></small></nobr>
 															</td>
 															<td>
 																<select name="DNSMASQ_USE" id="DNSMASQ_USE" data-track-theme="e" data-role="slider">
-															  	<option value="off"><!--$TXT_LABEL_DNSMASQ_USE_OFF--></option>
-															    <option value="on"><!--$TXT_LABEL_DNSMASQ_USE_ON--></option>
+															  	<option value="off"><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_USE_OFF></option>
+															    <option value="on"><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_USE_ON></option>
 															  </select>
-															  <script type="text/javascript">$('#DNSMASQ_USE').val("<!--$DNSMASQ_USE-->");</script>
+															  <script type="text/javascript">$('#DNSMASQ_USE').val("<TMPL_VAR DNSMASQ_USE>");</script>
                               </td>
                             </tr>
                          </table>
@@ -52,7 +59,7 @@
                       </tr>
                     </table>
                       <center>
-                       <table><tr><td><a style="width:300px;" id="btncancel" data-role="button" data-inline="true" data-mini="true" data-icon="delete" href="/admin/index.cgi"><!--$TXT_BTN_CANCEL--></a></td><td><a style="width:300px;" id="btnsavecfg" data-icon="check" data-role="button" data-mini="true" target="_self" onclick="CheckConfig(1,'<br/><br/><table cellpadding=10><tr><td><img src=\'/plugins/<!--$psubfolder-->/ico_tools.png\'></td><td><!--$TXT_CHECK_CFG_DIALOG_TEXT--></td></tr></table><br/>','<!--$MY_NAME--> - <!--$TXT_CHECK_CFG_DIALOG_TITLE_SAVE-->');"><!--$TXT_BTN_SAVE--></a></td></tr></table>
+                       <table><tr><td><a style="width:300px;" id="btncancel" data-role="button" data-inline="true" data-mini="true" data-icon="delete" href="/admin/index.cgi"><TMPL_VAR ADMIN.TXT_BTN_CANCEL></a></td><td><a style="width:300px;" id="btnsavecfg" data-icon="check" data-role="button" data-mini="true" target="_self" onclick="CheckConfig(1,'<br/><br/><table cellpadding=10><tr><td><img src=\'/plugins/<TMPL_VAR LBPPLUGINDIR>/ico_tools.png\'></td><td><TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_TEXT></td></tr></table><br/>','<TMPL_VAR ADMIN.MY_NAME> - <TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_TITLE_SAVE>');"><TMPL_VAR ADMIN.TXT_BTN_SAVE></a></td></tr></table>
                       </center>
                     <table cellpadding=0>
                       <tr>
@@ -65,32 +72,32 @@
                     </table>
                   <form method="post" data-ajax="false" name="main_form" id="main_form" action="./index.cgi">
                     <input type="hidden" name="saveformdata" value="1">
-                    <input id="CONTROL_PORT" name="CONTROL_PORT" value="<!--$CONTROL_PORT-->" type="hidden">
+                    <input id="CONTROL_PORT" name="CONTROL_PORT" value="<TMPL_VAR ADMIN.CONTROL_PORT>" type="hidden">
                     <div class="form-group">
                       <table class="formtable" width="100%">
                         <tr>
                           <td width="100%" align="left">
-                            <table width="100%"><tr><td><nobr><b><!--$TXT_LABEL_DNSMASQ_LEASES--></b></nobr></td><td width="100%" align="right"></td></tr></table>
-                            <div style="overflow-wrap: normal; white-space: nowrap; display:none; border-radius: 5px; " id="DNSMASQ_LEASES" cols="60" rows="5" class="form-control" spellcheck="false"><!--$DNSMASQ_LEASES--></div>
+                            <table width="100%"><tr><td><nobr><b><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_LEASES></b></nobr></td><td width="100%" align="right"></td></tr></table>
+                            <div style="overflow-wrap: normal; white-space: nowrap; display:none; border-radius: 5px; " id="DNSMASQ_LEASES" cols="60" rows="5" class="form-control" spellcheck="false"><TMPL_VAR DNSMASQ_LEASES></div>
                           </td>
                         </tr>
                         <tr>
                           <td width="100%" align="left">
-                            <table width="100%"><tr><td><nobr><b><!--$TXT_LABEL_DNSMASQ_HOSTS--></b></nobr></td><td width="100%" align="right"><a style="width:300px;" id="btncheckcfg" data-icon="check" data-role="button" data-mini="true" target="_self" onclick="CheckConfig(0,'<br/><br/><table cellpadding=10><tr><td><img src=\'/plugins/<!--$psubfolder-->/ico_tools.png\'></td><td><!--$TXT_CHECK_CFG_DIALOG_TEXT--></td></tr></table><br/>','<!--$MY_NAME--> - <!--$TXT_CHECK_CFG_DIALOG_TITLE-->');"><!--$TXT_BTN_CHECK_CFG--></a></td></tr></table>
-                            <textarea  style="overflow-wrap: normal; white-space: nowrap; overflow-x: scroll; display:none; " id="DNSMASQ_HOSTS" cols="60" rows="5" class="form-control" spellcheck="false"><!--$DNSMASQ_HOSTS--></textarea>
+                            <table width="100%"><tr><td><nobr><b><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_HOSTS></b></nobr></td><td width="100%" align="right"><a style="width:300px;" id="btncheckcfg" data-icon="check" data-role="button" data-mini="true" target="_self" onclick="CheckConfig(0,'<br/><br/><table cellpadding=10><tr><td><img src=\'/plugins/<TMPL_VAR LBPPLUGINDIR>/ico_tools.png\'></td><td><TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_TEXT></td></tr></table><br/>','<TMPL_VAR ADMIN.MY_NAME> - <TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_TITLE>');"><TMPL_VAR ADMIN.TXT_BTN_CHECK_CFG></a></td></tr></table>
+                            <textarea  style="overflow-wrap: normal; white-space: nowrap; overflow-x: scroll; display:none; " id="DNSMASQ_HOSTS" cols="60" rows="5" class="form-control" spellcheck="false"><TMPL_VAR DNSMASQ_HOSTS></textarea>
                           </td>
                         </tr>
                         <tr>
                           <td width="100%" align="left">
-                            <table width="100%"><tr><td><nobr><b><!--$TXT_LABEL_DNSMASQ_CFG--></b></nobr></td><td width="100%" align="right"><a style="width:300px;" id="btncheckcfg" data-icon="check" data-role="button" data-mini="true" target="_self" onclick="CheckConfig(0,'<br/><br/><table cellpadding=10><tr><td><img src=\'/plugins/<!--$psubfolder-->/ico_tools.png\'></td><td><!--$TXT_CHECK_CFG_DIALOG_TEXT--></td></tr></table><br/>','<!--$MY_NAME--> - <!--$TXT_CHECK_CFG_DIALOG_TITLE-->');"><!--$TXT_BTN_CHECK_CFG--></a></td></tr></table>
-                            <textarea style="overflow-wrap: normal; white-space: nowrap; overflow-x: scroll; display:none;" id="DNSMASQ_CFG" cols="60" rows="5" class="form-control" spellcheck="false"><!--$DNSMASQ_CFG--></textarea>
+                            <table width="100%"><tr><td><nobr><b><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_CFG></b></nobr></td><td width="100%" align="right"><a style="width:300px;" id="btncheckcfg" data-icon="check" data-role="button" data-mini="true" target="_self" onclick="CheckConfig(0,'<br/><br/><table cellpadding=10><tr><td><img src=\'/plugins/<TMPL_VAR LBPPLUGINDIR>/ico_tools.png\'></td><td><TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_TEXT></td></tr></table><br/>','<TMPL_VAR ADMIN.MY_NAME> - <TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_TITLE>');"><TMPL_VAR ADMIN.TXT_BTN_CHECK_CFG></a></td></tr></table>
+                            <textarea style="overflow-wrap: normal; white-space: nowrap; overflow-x: scroll; display:none;" id="DNSMASQ_CFG" cols="60" rows="5" class="form-control" spellcheck="false"><TMPL_VAR DNSMASQ_CFG></textarea>
                           </td>
                         </tr>
                       </table>
                     </div>
                     <p>
                       <center>
-                       <table><tr><td><a style="width:300px;" id="btncancel" data-role="button" data-inline="true" data-mini="true" data-icon="delete" href="/admin/index.cgi"><!--$TXT_BTN_CANCEL--></a></td><td><a style="width:300px;" id="btnsavecfg" data-icon="check" data-role="button" data-mini="true" target="_self" onclick="CheckConfig(1,'<br/><br/><table cellpadding=10><tr><td><img src=\'/plugins/<!--$psubfolder-->/ico_tools.png\'></td><td><!--$TXT_CHECK_CFG_DIALOG_TEXT--></td></tr></table><br/>','<!--$MY_NAME--> - <!--$TXT_CHECK_CFG_DIALOG_TITLE_SAVE-->');"><!--$TXT_BTN_SAVE--></a></td></tr></table>
+                       <table><tr><td><a style="width:300px;" id="btncancel" data-role="button" data-inline="true" data-mini="true" data-icon="delete" href="/admin/index.cgi"><TMPL_VAR ADMIN.TXT_BTN_CANCEL></a></td><td><a style="width:300px;" id="btnsavecfg" data-icon="check" data-role="button" data-mini="true" target="_self" onclick="CheckConfig(1,'<br/><br/><table cellpadding=10><tr><td><img src=\'/plugins/<TMPL_VAR LBPPLUGINDIR>/ico_tools.png\'></td><td><TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_TEXT></td></tr></table><br/>','<TMPL_VAR ADMIN.MY_NAME> - <TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_TITLE_SAVE>');"><TMPL_VAR ADMIN.TXT_BTN_SAVE></a></td></tr></table>
                       </center>
                     </p>
                   </form>
@@ -118,7 +125,7 @@
                       var rule = /^([5]{1}[0-9]{4})$/;
                       if(!rule.test($('#CONTROL_PORT_div').text()))
                       {
-                        $('#form-error-message').html('<!--$TXT_ERROR_ENTER_VALID_CONTROL_PORT-->');
+                        $('#form-error-message').html('<TMPL_VAR ADMIN.TXT_ERROR_ENTER_VALID_CONTROL_PORT>');
                         var offset = $('#CONTROL_PORT_div').offset();
                         $('#form-error-message').fadeIn(400);
                         $('#form-error-message').css({'padding': '5px', 'border': '1px solid #FF0000', 'border-radius': '5px', 'color': '#FF0000', 'background-color': '#FFFFC0', 'z-index': 1000, 'top': offset.top - 35, 'left': offset.left, 'position':'absolute'});
@@ -155,7 +162,7 @@
                       var rule = /^([5]{1}[0-9]{4})$/;
                       if(!rule.test($('#CONTROL_PORT_div').text()))
                       {
-                        $('#form-error-message').html('<!--$TXT_ERROR_ENTER_VALID_CONTROL_PORT-->');
+                        $('#form-error-message').html('<TMPL_VAR ADMIN.TXT_ERROR_ENTER_VALID_CONTROL_PORT>');
                         var offset = $('#CONTROL_PORT_div').offset();
                         $('#form-error-message').fadeIn(400);
                         $('#form-error-message').css({'padding': '5px', 'border': '1px solid #FF0000', 'border-radius': '5px', 'color': '#FF0000', 'background-color': '#FFFFC0', 'z-index': 1000, 'top': offset.top - 35, 'left': offset.left, 'position':'absolute'});
@@ -170,44 +177,35 @@
                         $('#CONTROL_PORT').val($('#CONTROL_PORT_div').text());
                       }
                     });
-                    function ConfirmDialog(message,title)
-                    {
-                        $('#dialog').html(message)
-                        .prop('id','dialog')
-                        .dialog(
-                        {
-                          modal: true, title: title, zIndex: 10000, autoOpen: true,
-                          resizable: true, 
-													width: 'auto',									
-													height: 'auto',
-													minWidth: '400',
-													minHeight: '330',
-                          buttons:
-                          {
-                            <!--$TXT_BTN_YES-->: function ()
-                            {
-                              $(":button:contains('<!--$TXT_BTN_YES-->')").prop("disabled", true).addClass("ui-state-disabled");
-                              $('#dialog').html('<center><br/><br/><!--$TXT_EMPTY_LOG_DIALOG_PROGRESS--></center><br/><br/><br/><br/>');
-                              $.get( "/plugins/<!--$psubfolder-->/?mode=empty_logfile", function( data ) 
-                              {
-                                $('#dialog').html('<center><br/>'+data+'</center>');
-                                setTimeout( function() { $('#dialog').dialog("close"); }, 2000);
-                              }).fail(function() { $('#dialog').html('<center><br/><!--$TXT_EMPTY_LOG_DIALOG_AUTHENTICATE--></center>'); $(":button:contains('<!--$TXT_BTN_YES-->')").prop("disabled", '').removeClass("ui-state-disabled"); });
-                            },
-                            <!--$TXT_BTN_NO-->: function ()
-                            {
-                              $('#dialog').dialog("close");
-                            }
-                          },
-                          close: function (event, ui)
-                          {
-                            $(this).hide();
-                          }
-                        });
-                    };
                     function get_leases()
                       {
+
+                        
                         $.ajax(
+                        {
+                          type: "GET",
+                          dataType: "text",
+                          url: "./index.cgi?do=get_leases",
+                          cache: false,
+                          success: function(data)
+                          {
+                            if ( data == "0")
+                            {
+                              data = '<TMPL_VAR ADMIN.TXT_ERROR_NO_LEASES>';
+                              $('#DNSMASQ_LEASES').html(data);
+                            }
+                            else
+                            {
+                              $('#DNSMASQ_LEASES').html(data);
+                            }
+                          }
+                        }).fail(function() 
+                        { 
+                             $('#DNSMASQ_LEASES').html('<TMPL_VAR ADMIN.TXT_ERROR_GET_LEASES>');
+                        });
+                        setTimeout( function() 
+                        { 
+                         $.ajax(
                         {
                           type: "GET",
                           dataType: "text",
@@ -222,43 +220,21 @@
                               case 'DNSMASQ_STATUS_768':
                               case 'DNSMASQ_STATUS_DOWN':
                               case 'DNSMASQ_STATUS_OFF':
-                                  $( "#controlstat" ).html("<img width='40' height='40' src='../../../plugins/<!--$psubfolder-->/"+data+".png'>" );
+                                  $( "#controlstat" ).html("<img width='40' height='40' src='../../../plugins/<TMPL_VAR LBPPLUGINDIR>/"+data+".png'>" );
                                   break;
                               default:
-                                $( "#controlstat" ).html( "<img width='40' height='40' src='../../../plugins/<!--$psubfolder-->/DNSMASQ_STATUS_UNKNOWN.png'>" );
+                                $( "#controlstat" ).html( "<img width='40' height='40' src='../../../plugins/<TMPL_VAR LBPPLUGINDIR>/DNSMASQ_STATUS_UNKNOWN.png'>" );
                             }
                           }
                         }).fail(function() 
                         { 
-                            $( "#controlstat" ).html( "<img width='40' height='40' src='../../../plugins/<!--$psubfolder-->/DNSMASQ_STATUS_UNKNOWN.png'>" );
-                        });
-                        
-                        $.ajax(
-                        {
-                          type: "GET",
-                          dataType: "text",
-                          url: "./index.cgi?do=get_leases",
-                          cache: false,
-                          success: function(data)
-                          {
-                            if ( data == "0")
-                            {
-                              data = '<!--$TXT_ERROR_NO_LEASES-->';
-                              $('#DNSMASQ_LEASES').html(data);
-                            }
-                            else
-                            {
-                              $('#DNSMASQ_LEASES').html(data);
-                            }
-                          }
-                        }).fail(function() 
-                        { 
-                             $('#DNSMASQ_LEASES').html('<!--$TXT_ERROR_GET_LEASES-->');
-                        });
+                            $( "#controlstat" ).html( "<img width='40' height='40' src='../../../plugins/<TMPL_VAR LBPPLUGINDIR>/DNSMASQ_STATUS_UNKNOWN.png'>" );
+                        });               
+						}, 1000);     
                         setTimeout( function() 
                         { 
                           get_leases();
-                        }, 15000);                    
+                        }, 15000);     
                       };
 
 
@@ -267,7 +243,7 @@
                     {
                     		if ( $('#btnsavecfg').prop('disabled') == 'true' )
                     		{
-	                        $('#form-error-message').html('<!--$TXT_ERROR_ENTER_VALID_CONTROL_PORT-->');
+	                        $('#form-error-message').html('<TMPL_VAR ADMIN.TXT_ERROR_ENTER_VALID_CONTROL_PORT>');
 	                        $("html, body").animate({ scrollTop: 0 }, "slow");
 	                        var offset = $('#CONTROL_PORT_div').offset();
 	                        $('#form-error-message').fadeIn(400);
@@ -288,15 +264,15 @@
 													minHeight: '330',
                           buttons:
                           {
-                            '<!--$TXT_BTN_CHECK_CFG_DIALOG_CHECK-->': function ()
+                            '<TMPL_VAR ADMIN.TXT_BTN_CHECK_CFG_DIALOG_CHECK>': function ()
                             {
-                              $('#dialog').html('<center><br/><br/><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div></div><!--$TXT_PLEASE_WAIT--><br/><br/><br/>');
+                              $('#dialog').html('<center><br/><br/><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div></div><TMPL_VAR ADMIN.TXT_PLEASE_WAIT><br/><br/><br/>');
                               $.ajax(
                               {
                                 type: "POST",
                                 dataType: "text",
-                                url: "./index.cgi?do=check_config",
-                                data: { CONTROL_PORT: $("#CONTROL_PORT").val(), DNSMASQ_USE: $("#DNSMASQ_USE").val(), save_data: 0, cfg_stream: Base64.encode($("#DNSMASQ_CFG").val()) , hosts_stream: Base64.encode($("#DNSMASQ_HOSTS").val())},
+                                url: "./index.cgi",
+                                data: { do: "check_config", CONTROL_PORT: $("#CONTROL_PORT").val(), DNSMASQ_USE: $("#DNSMASQ_USE").val(), save_data: 0, cfg_stream: Base64.encode($("#DNSMASQ_CFG").val()) , hosts_stream: Base64.encode($("#DNSMASQ_HOSTS").val())},
                                 cache: false,
                                 success: function(data)
                                 {
@@ -305,7 +281,7 @@
                                   {
                                     dialog = $('#dialog').closest('.ui-dialog');
                                     var line_with_error = parseInt(test_result[1]);
-                                    $('#dialog').html('<table><tr><td><img src="/plugins/<!--$psubfolder-->/ico_chk_'+test_result[2]+'.png"></td><td><!--$TXT_ERR_CFG_CHK--><br/><br/><span class="dnsmasq_param_error">'+test_result[3]+': <b>'+test_result[0]+'</b></span><br/><br/><!--$TXT_ERR_CFG_LINE--> '+line_with_error+'<br/><br/></td></tr></table>');
+                                    $('#dialog').html('<table><tr><td><img src="/plugins/<TMPL_VAR LBPPLUGINDIR>/ico_chk_'+test_result[2]+'.png"></td><td><TMPL_VAR ADMIN.TXT_ERR_CFG_CHK><br/><br/><span class="dnsmasq_param_error">'+test_result[3]+': <b>'+test_result[0]+'</b></span><br/><br/><TMPL_VAR ADMIN.TXT_ERR_CFG_LINE> '+line_with_error+'<br/><br/></td></tr></table>');
                                     if (line_with_error == 1)
                                     {
                                     $("#DNSMASQ_"+test_result[3]).setSelection(0,$('#DNSMASQ_'+test_result[3]).text().split("\n", line_with_error).join("\n").length+1);              
@@ -327,25 +303,26 @@
                                   }
                                   else
                                   {
-                                    $('#dialog').html('<table><tr><td><img src="/plugins/<!--$psubfolder-->/ico_chk_'+test_result[1]+'.png"></td><td><!--$TXT_OK_CFG_CHK--><br/><br/><span class="dnsmasq_param_ok"><b>'+test_result[0]+'</b></span><br/><br/></td></tr></table>');
+                                  	if ( test_result[0] == "ok" ) test_result[1] = "ok";
+                                    $('#dialog').html('<table><tr><td><img src="/plugins/<TMPL_VAR LBPPLUGINDIR>/ico_chk_'+test_result[1]+'.png"></td><td><TMPL_VAR ADMIN.TXT_OK_CFG_CHK><br/><br/><span class="dnsmasq_param_ok"><b>'+test_result[0]+'</b></span><br/><br/></td></tr></table>');
                                     if ( save == 1 )
                                     {
-                                      $('#dialog').html('<table><tr><td rowspan="2"><img src="/plugins/<!--$psubfolder-->/ico_chk_'+test_result[1]+'.png"></td><td align="center"><!--$TXT_OK_CFG_CHK--><br/><br/><span class="dnsmasq_param_ok"><b>'+test_result[0]+'</b></span><br/><br/></td></tr><tr><td align="center"><!--$TXT_SAVE_DIALOG--><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div></div><!--$TXT_PLEASE_WAIT--></td></tr></table>');
-                                    	$('.ui-dialog-buttonpane button:contains("<!--$TXT_BTN_CHECK_CFG_DIALOG_CHECK-->")').button().hide();
+                                      $('#dialog').html('<table><tr><td rowspan="2"><img src="/plugins/<TMPL_VAR LBPPLUGINDIR>/ico_chk_'+test_result[1]+'.png"></td><td align="center"><TMPL_VAR ADMIN.TXT_OK_CFG_CHK><br/><br/><span class="dnsmasq_param_ok"><b>'+test_result[0]+'</b></span><br/><br/></td></tr><tr><td align="center"><TMPL_VAR ADMIN.TXT_SAVE_DIALOG><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div></div><TMPL_VAR ADMIN.TXT_PLEASE_WAIT></td></tr></table>');
+                                    	$('.ui-dialog-buttonpane button:contains("<TMPL_VAR ADMIN.TXT_BTN_CHECK_CFG_DIALOG_CHECK>")').button().hide();
                                     	setTimeout( function() 
                                       { 
                                         $.ajax(
                                             {
                                               type: "POST",
                                               dataType: "text",
-                                              url: "./index.cgi?do=check_config",
-                                              data: { CONTROL_PORT: $("#CONTROL_PORT").val(), DNSMASQ_USE: $("#DNSMASQ_USE").val(), save_data: 1, cfg_stream: Base64.encode($("#DNSMASQ_CFG").val()) , hosts_stream: Base64.encode($("#DNSMASQ_HOSTS").val())},
+                                              url: "./index.cgi",
+                                              data: { do: "check_config", CONTROL_PORT: $("#CONTROL_PORT").val(), DNSMASQ_USE: $("#DNSMASQ_USE").val(), save_data: 1, cfg_stream: Base64.encode($("#DNSMASQ_CFG").val()) , hosts_stream: Base64.encode($("#DNSMASQ_HOSTS").val())},
                                               cache: false,
                                               success: function(data)
                                               {
                                                   if ( data == "ok" )
                                                   {
-                                                    $('#dialog').html('<table><tr><td><img src="/plugins/<!--$psubfolder-->/ico_chk_ok.png"></td><td><br/><!--$TXT_SAVE_DIALOG_OK--><br/><br/></td></tr></table>');
+                                                    $('#dialog').html('<table><tr><td><img src="/plugins/<TMPL_VAR LBPPLUGINDIR>/ico_chk_ok.png"></td><td><br/><TMPL_VAR ADMIN.TXT_SAVE_DIALOG_OK><br/><br/></td></tr></table>');
                                                     setTimeout( function() 
                                                     { 
                                                                 $('#dialog').dialog("close");
@@ -354,20 +331,20 @@
                                                   }
                                                   else
                                                   {
-                                                    $('#dialog').html('<table><tr><td><img src="/plugins/<!--$psubfolder-->/ico_chk_error.png"></td><td><!--$TXT_SAVE_DIALOG_FAIL--><br\><br\>'+data+'<br/><br/></td></tr></table>');
+                                                    $('#dialog').html('<table><tr><td><img src="/plugins/<TMPL_VAR LBPPLUGINDIR>/ico_chk_error.png"></td><td><TMPL_VAR ADMIN.TXT_SAVE_DIALOG_FAIL><br\><br\>'+data+'<br/><br/></td></tr></table>');
                                                   }
                                               }
                                             }).fail(function() 
                                             { 
-                                                 $('#dialog').html('<table><tr><td><img src="/plugins/<!--$psubfolder-->/ico_chk_error.png"></td><td><br/><br/><!--$TXT_SAVE_DIALOG_FAIL--><br/><br/></td></tr></table>');
+                                                 $('#dialog').html('<table><tr><td><img src="/plugins/<TMPL_VAR LBPPLUGINDIR>/ico_chk_error.png"></td><td><br/><br/><TMPL_VAR ADMIN.TXT_SAVE_DIALOG_FAIL><br/><br/></td></tr></table>');
                                             });
                                       }, 500);                    
                                     }
                                   }
                                 }
-                              }).fail(function() { $('#dialog').html('<center><br/><!--$TXT_CHECK_CFG_DIALOG_FAIL--><br/><br/></center>'); });
+                              }).fail(function() { $('#dialog').html('<center><br/><TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_FAIL><br/><br/></center>'); });
                             },
-                            '<!--$TXT_BTN_CHECK_CFG_DIALOG_CLOSE-->': function ()
+                            '<TMPL_VAR ADMIN.TXT_BTN_CHECK_CFG_DIALOG_CLOSE>': function ()
                             {
                               $('#dialog').dialog("close");
                             }
@@ -377,7 +354,7 @@
                             $(this).hide();
                           }
                         });
-                        $('.ui-button:contains("<!--$TXT_BTN_CHECK_CFG_DIALOG_CHECK-->")').click()
+                        $('.ui-button:contains("<TMPL_VAR ADMIN.TXT_BTN_CHECK_CFG_DIALOG_CHECK>")').click()
                     };
     
                               
@@ -437,6 +414,47 @@
                         $("#DNSMASQ_LEASES").fadeTo( 'slow', 1 ); 
                       }, 200);                    
 
+                      setTimeout( function() 
+                      { 
                       get_leases();
+                      }, 1000);
+                      
                     });
                   </script>
+			
+			
+			
+												<center>
+										<div style="display:table;">
+											<div style="display:table-row;">
+												<div style="display:table-cell; ">
+													<div style="display:table; padding:10px; border: 1px solid black; border-radius: 5px; background-color: rgba(19,172,132,.2);">
+													<TMPL_VAR LOGGING.LOG_AREA> (<TMPL_VAR LOGGING.LOGLEVEL> <TMPL_VAR LOGLEVEL>)<br>
+												 		<div style="display:table-row;">
+															<div style="display:table-cell; border-radius: 5px;" id="delete_log_div">
+													 			<button id="delete_log_btn" onclick="$('#delete_log_div').css('background-color','yellow'); $('#delete_log_btn').html('<TMPL_VAR LOGGING.LOG_BUTTON_DELETE_WORKING>'); $.ajax({url: '', type: 'GET', data: { 'delete_log':1},
+														            success: function (data) {
+														                $('#delete_log_div').css('background-color','green');
+														                $('#delete_log_btn').html('<TMPL_VAR LOGGING.LOG_BUTTON_DELETE_OK>');
+														                setTimeout( function() { $('#delete_log_div').css('background-color',''); $('#delete_log_btn').html('<TMPL_VAR LOGGING.LOG_BUTTON_DELETE>'); }, 2000);
+														            },
+														            error: function (textStatus, errorThrown) {
+														                $('#delete_log_div').css('background-color','red');
+														                $('#delete_log_btn').html('<TMPL_VAR LOGGING.LOG_BUTTON_DELETE_FAIL>');
+														                setTimeout( function() { $('#delete_log_div').css('background-color',''); $('#delete_log_btn').html('<TMPL_VAR LOGGING.LOG_BUTTON_DELETE>');}, 2000);
+														
+														            }	}); return false;" data-role="button" data-inline="true" data-mini="true"><TMPL_VAR LOGGING.LOG_BUTTON_DELETE></button>
+													 			<button onclick="window.open('/admin/system/tools/logfile.cgi?logfile=<TMPL_VAR LOGFILE>&amp;header=html&amp;format=template', 'log'); return false;" id="logview" data-role="button" data-inline="true" data-mini="true"><TMPL_VAR LOGGING.LOG_BUTTON_VIEW></button>
+													 			<SCRIPT> 
+								 					 	 			$("label").css("text-align","left").css("margin-top","8px").css("margin-bottom","-8px").css("margin-left","0px");
+																</SCRIPT>
+															</div>
+												 		</div>
+													</div>
+											 	</div>
+										 	</div>
+									 	</div>
+									</center>
+<small><small><TMPL_VAR VERSION></small></small>
+
+ 

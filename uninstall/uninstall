@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "Stopping DNSmasq Plugin Server Controller"
+CS_PID=`ps -ef|grep "dnsmasq/bin/server_control.pl"|grep -v grep |awk -F" " '{ print $2 }'`                                                                           
+if [ -z "$CS_PID" ]
+then
+	echo "Not running => ok"
+else
+	echo "Process ID $CS_PID found, killing it"
+	kill -9 $CS_PID;
+fi
+exit 0

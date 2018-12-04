@@ -1,6 +1,5 @@
 # Auto detect text files and perform LF normalization
-*.cgi eol=lf
-*.pl eol=lf
+* text=lf
 
 # Custom for Visual Studio
 *.cs     diff=csharp
