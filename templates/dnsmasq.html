@@ -11,11 +11,11 @@
 
 
                   <div id="dialog"></div>
-                  <script type="text/javascript" src="/plugins/<TMPL_VAR LBPPLUGINDIR>/jquery-ui-1.9.2.custom.min.js"></script>
-                  <script type="text/javascript" src="/plugins/<TMPL_VAR LBPPLUGINDIR>/jquery.numberedtextarea.js"></script>
-                  <script type="text/javascript" src="/plugins/<TMPL_VAR LBPPLUGINDIR>/jquery.extend.js"></script>
-                  <script type="text/javascript" src="/plugins/<TMPL_VAR LBPPLUGINDIR>/base64.js"></script>
-                  <link   type="text/css" rel="stylesheet" href="/plugins/<TMPL_VAR LBPPLUGINDIR>/style.css">
+                  <script type="text/javascript" src="../../../plugins/<TMPL_VAR LBPPLUGINDIR>/jquery-ui-1.9.2.custom.min.js"></script>
+                  <script type="text/javascript" src="../../../plugins/<TMPL_VAR LBPPLUGINDIR>/jquery.numberedtextarea.js"></script>
+                  <script type="text/javascript" src="../../../plugins/<TMPL_VAR LBPPLUGINDIR>/jquery.extend.js"></script>
+                  <script type="text/javascript" src="../../../plugins/<TMPL_VAR LBPPLUGINDIR>/base64.js"></script>
+                  <link   type="text/css" rel="stylesheet" href="../../../plugins/<TMPL_VAR LBPPLUGINDIR>/style.css">
                   <center>
                     <table width="100%" style="background: rgba(255,255,192, 0.4); border-radius: 5px; border: 1px solid #7e7e7e; ">
                       <tr>
@@ -78,19 +78,19 @@
                         <tr>
                           <td width="100%" align="left">
                             <table width="100%"><tr><td><nobr><b><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_LEASES></b></nobr></td><td width="100%" align="right"></td></tr></table>
-                            <div style="overflow-wrap: normal; white-space: nowrap; display:none; border-radius: 5px; " id="DNSMASQ_LEASES" cols="60" rows="5" class="form-control" spellcheck="false"><TMPL_VAR DNSMASQ_LEASES></div>
+                            <div style="overflow-wrap: normal; display:none; border-radius: 5px; " id="DNSMASQ_LEASES" cols="60" rows="5" class="form-control" spellcheck="false"><TMPL_VAR DNSMASQ_LEASES></div>
                           </td>
                         </tr>
                         <tr>
                           <td width="100%" align="left">
                             <table width="100%"><tr><td><nobr><b><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_HOSTS></b></nobr></td><td width="100%" align="right"><a style="width:300px;" id="btncheckcfg" data-icon="check" data-role="button" data-mini="true" target="_self" onclick="CheckConfig(0,'<br/><br/><table cellpadding=10><tr><td><img src=\'/plugins/<TMPL_VAR LBPPLUGINDIR>/ico_tools.png\'></td><td><TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_TEXT></td></tr></table><br/>','<TMPL_VAR ADMIN.MY_NAME> - <TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_TITLE>');"><TMPL_VAR ADMIN.TXT_BTN_CHECK_CFG></a></td></tr></table>
-                            <textarea  style="overflow-wrap: normal; white-space: nowrap; overflow-x: scroll; display:none; " id="DNSMASQ_HOSTS" cols="60" rows="5" class="form-control" spellcheck="false"><TMPL_VAR DNSMASQ_HOSTS></textarea>
+                            <textarea  style="overflow-wrap: normal; overflow-x: scroll; display:none; " id="DNSMASQ_HOSTS" cols="60" rows="5" class="form-control" spellcheck="false"><TMPL_VAR DNSMASQ_HOSTS></textarea>
                           </td>
                         </tr>
                         <tr>
                           <td width="100%" align="left">
                             <table width="100%"><tr><td><nobr><b><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_CFG></b></nobr></td><td width="100%" align="right"><a style="width:300px;" id="btncheckcfg" data-icon="check" data-role="button" data-mini="true" target="_self" onclick="CheckConfig(0,'<br/><br/><table cellpadding=10><tr><td><img src=\'/plugins/<TMPL_VAR LBPPLUGINDIR>/ico_tools.png\'></td><td><TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_TEXT></td></tr></table><br/>','<TMPL_VAR ADMIN.MY_NAME> - <TMPL_VAR ADMIN.TXT_CHECK_CFG_DIALOG_TITLE>');"><TMPL_VAR ADMIN.TXT_BTN_CHECK_CFG></a></td></tr></table>
-                            <textarea style="overflow-wrap: normal; white-space: nowrap; overflow-x: scroll; display:none;" id="DNSMASQ_CFG" cols="60" rows="5" class="form-control" spellcheck="false"><TMPL_VAR DNSMASQ_CFG></textarea>
+                            <textarea style="overflow-wrap: normal; overflow-x: scroll; display:none;" id="DNSMASQ_CFG" cols="60" rows="5" class="form-control" spellcheck="false"><TMPL_VAR DNSMASQ_CFG></textarea>
                           </td>
                         </tr>
                       </table>
