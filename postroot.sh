@@ -1,4 +1,8 @@
 
+echo `date +"%b  %e %H:%M:%S "`"Enable DNS Service for other Subnets than local Subnet, too."                                                                         2>&1 >>$logfile
+INPUTFILE="/etc/init.d/dnsmasq"
+/bin/sed -i 's/--local-service//g' $INPUTFILE
+
 echo `date +"%b  %e %H:%M:%S "`"Check, if DNSmasq Control Daemon is running"                                                                                          
 CS_PID=`ps -ef|grep "dnsmasq/bin/server_control.pl"|grep -v grep |awk -F" " '{ print $2 }'`                                                                           
 if [ -z "$CS_PID" ]

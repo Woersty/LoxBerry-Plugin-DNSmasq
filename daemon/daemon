@@ -57,6 +57,8 @@ then
    echo `date +"%b  %e %H:%M:%S "`"Plugin modification not yet done, adapt $INPUTFILE"                                                                                  2>&1 >>$logfile
    echo `date +"%b  %e %H:%M:%S "`"Backup $INPUTFILE to $BACKUPFILE "                                                                                                   2>&1 >>$logfile
    cp $INPUTFILE $BACKUPFILE                                                                                                                                            2>&1 >>$logfile
+   echo `date +"%b  %e %H:%M:%S "`"Enable DNS Service for other Subnets than local Subnet, too."                                                                        2>&1 >>$logfile
+   /bin/sed -i 's/--local-service//g' $INPUTFILE
    LINENUM=$((`grep 'RESOLV_CONF=/var/run/dnsmasq/resolv.conf' $INPUTFILE -n|head -n1|cut -d: -f1` + 2))
    LINESTR="\n#### Start LoxBerry-Plugin DNSmasq\n if [ -r "$plugdnsmasq" ] \n then \n dnsmasq --test --dhcp-leasefile=$plugleasefile --log-facility=$logfile --addn-hosts=$plughostsfile --conf-file=$plugdnsmasq >>$logfile 2>&1 \n if [ \$? -eq 0 ]\n then \n  echo $plugdnsmasq is VALID and used!! \n   DNSMASQ_OPTS=\"\$DNSMASQ_OPTS --dhcp-leasefile=$plugleasefile --log-facility=$logfile --addn-hosts=$plughostsfile --conf-file=$plugdnsmasq\"\n else \n echo $plugdnsmasq is INVALID and NOT used!! \n  fi \n fi \n#### End LoxBerry-Plugin DNSmasq\n"
    echo `date +"%b  %e %H:%M:%S "`"Remove older /tmp/LoxBerry_DNSmasq_plugin_tmp file if existent "                                                                     2>&1 >>$logfile
@@ -134,6 +136,8 @@ then
 else
   echo `date +"%b  %e %H:%M:%S "`"modify.me not found. Plugin modification already done. Try to start DNSmasq-Plugin."
   echo `date +"%b  %e %H:%M:%S "`"Plugin modification already done."                                                                                                    2>&1 >>$logfile
+  echo `date +"%b  %e %H:%M:%S "`"Enable DNS Service for other Subnets than local Subnet, too."                                                                         2>&1 >>$logfile
+  /bin/sed -i 's/--local-service//g' $INPUTFILE
   echo `date +"%b  %e %H:%M:%S "`"Check, if DNSmasq Control Daemon is running"                                                                                          2>&1 >>$logfile
   CS_PID=`ps -ef|grep "dnsmasq/bin/server_control.pl"|grep -v grep |awk -F" " '{ print $2 }'`                                                                           2>&1 >>$logfile
   if [ -z "$CS_PID" ]
