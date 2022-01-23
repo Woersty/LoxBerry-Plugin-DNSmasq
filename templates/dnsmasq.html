@@ -47,12 +47,23 @@
                               	<nobr><small><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_USE></small></nobr>
 															</td>
 															<td>
-																<select name="DNSMASQ_USE" id="DNSMASQ_USE" data-track-theme="e" data-role="slider">
+															  <select name="DNSMASQ_USE" id="DNSMASQ_USE" data-track-theme="e" data-role="slider">
 															  	<option value="off"><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_USE_OFF></option>
 															    <option value="on"><TMPL_VAR ADMIN.TXT_LABEL_DNSMASQ_USE_ON></option>
 															  </select>
 															  <script type="text/javascript">$('#DNSMASQ_USE').val("<TMPL_VAR DNSMASQ_USE>");</script>
-                              </td>
+															</td>
+                            </tr><tr>
+														  <td align="right">
+															<nobr><small><TMPL_VAR ADMIN.TXT_LABEL_SORT_BY_IP></small></nobr>
+																						</td>
+																						<td>
+																						  <select name="SORT_BY_IP" id="SORT_BY_IP" data-track-theme="e" data-role="slider">
+																							<option value="off"><TMPL_VAR ADMIN.TXT_LABEL_SORT_BY_IP_OFF></option>
+																							<option value="on"><TMPL_VAR ADMIN.TXT_LABEL_SORT_BY_IP_ON></option>
+																						  </select>
+																						  <script type="text/javascript">$('#SORT_BY_IP').val("<TMPL_VAR SORT_BY_IP>");</script>
+														  </td>
                             </tr>
                          </table>
                         </td>
@@ -272,7 +283,7 @@
                                 type: "POST",
                                 dataType: "text",
                                 url: "./index.cgi",
-                                data: { do: "check_config", CONTROL_PORT: $("#CONTROL_PORT").val(), DNSMASQ_USE: $("#DNSMASQ_USE").val(), save_data: 0, cfg_stream: Base64.encode($("#DNSMASQ_CFG").val()) , hosts_stream: Base64.encode($("#DNSMASQ_HOSTS").val())},
+                                data: { do: "check_config", CONTROL_PORT: $("#CONTROL_PORT").val(), DNSMASQ_USE: $("#DNSMASQ_USE").val(), SORT_BY_IP: $("#SORT_BY_IP").val(), save_data: 0, cfg_stream: Base64.encode($("#DNSMASQ_CFG").val()) , hosts_stream: Base64.encode($("#DNSMASQ_HOSTS").val())},
                                 cache: false,
                                 success: function(data)
                                 {
@@ -316,7 +327,7 @@
                                               type: "POST",
                                               dataType: "text",
                                               url: "./index.cgi",
-                                              data: { do: "check_config", CONTROL_PORT: $("#CONTROL_PORT").val(), DNSMASQ_USE: $("#DNSMASQ_USE").val(), save_data: 1, cfg_stream: Base64.encode($("#DNSMASQ_CFG").val()) , hosts_stream: Base64.encode($("#DNSMASQ_HOSTS").val())},
+                                              data: { do: "check_config", CONTROL_PORT: $("#CONTROL_PORT").val(), DNSMASQ_USE: $("#DNSMASQ_USE").val(), SORT_BY_IP: $("#SORT_BY_IP").val(), save_data: 1, cfg_stream: Base64.encode($("#DNSMASQ_CFG").val()) , hosts_stream: Base64.encode($("#DNSMASQ_HOSTS").val())},
                                               cache: false,
                                               success: function(data)
                                               {

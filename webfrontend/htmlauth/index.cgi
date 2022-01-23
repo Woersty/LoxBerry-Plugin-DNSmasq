@@ -80,6 +80,7 @@ our $cfg_stream;
 our $hosts_stream;
 our $CONTROL_PORT="";
 our $DNSMASQ_USE="";
+our $SORT_BY_IP="";
 our $req;
 
 $R::delete_log if (0);
@@ -187,6 +188,7 @@ if (!-r _ )
 	open my $configfileHandle, ">", $pluginconfigfile or &error;
 		print $configfileHandle 'CONTROL_PORT="50003"'."\n";
 		print $configfileHandle 'DNSMASQ_USE="off"'."\n";
+		print $configfileHandle 'SORT_BY_IP="off"'."\n";
 	close $configfileHandle;
 	$error_message = $L{'ERRORS.ERR_DEFAULT_CONFIG'}." (".$pluginconfigfile.")";
 	&error; 
@@ -259,6 +261,7 @@ LOGINF $L{'ADMIN.READING_CONFIG_FROM'}." ".$pluginconfigfile;
 	{
 		$CONTROL_PORT 	= $plugin_cfg->param("default.CONTROL_PORT");
 		$DNSMASQ_USE 	= $plugin_cfg->param("default.DNSMASQ_USE");
+		$SORT_BY_IP 	= $plugin_cfg->param("default.SORT_BY_IP");
 	}
 	LOGWARN $L{'ERRORS.ERR_CONFIG_VALUE'}." CONTROL_PORT @".__LINE__ if $CONTROL_PORT lt 1025;
 	$CONTROL_PORT = 50003 if $CONTROL_PORT eq "";
@@ -267,6 +270,10 @@ LOGINF $L{'ADMIN.READING_CONFIG_FROM'}." ".$pluginconfigfile;
 	LOGWARN $L{'ERRORS.ERR_CONFIG_VALUE'}." DNSMASQ_USE @".__LINE__ if $DNSMASQ_USE ne 'on' && $DNSMASQ_USE ne 'off';
 	$DNSMASQ_USE = "off" if $DNSMASQ_USE ne "on";
 	LOGDEB "DNSMASQ_USE = $DNSMASQ_USE";
+	
+	LOGWARN $L{'ERRORS.ERR_CONFIG_VALUE'}." SORT_BY_IP @".__LINE__ if $SORT_BY_IP ne 'on' && $SORT_BY_IP ne 'off';
+	$SORT_BY_IP = "off" if $SORT_BY_IP ne "on";
+	LOGDEB "SORT_BY_IP = $SORT_BY_IP";
 }
 &get_base_config;
 
@@ -351,8 +358,17 @@ sub get_leases
        {
    		LOGINF scalar @dnsmasqleasefilelines." ".$L{'ADMIN.LEASES_FOUND'};
        	}
-       print $DNSMASQ_LEASES;
-  	   LOGDEB $DNSMASQ_LEASES;
+
+	   if ($SORT_BY_IP eq "on")
+       {
+			open(FH, '>', '/tmp/dnsmasqleases') or die $!;
+			print FH $DNSMASQ_LEASES;
+			close(FH);
+			$DNSMASQ_LEASES = `awk '{print \$NF " " \$8,\$0}' /tmp/dnsmasqleases |cut -d" " -f2-|sort  -n -t . -k 1,1 -k 2,2 -k 3,3 -k 4,4|cut -d" " -f2-`;
+			unlink('/tmp/dnsmasqleases');
+	   }
+	   print $DNSMASQ_LEASES;
+	   LOGDEB $DNSMASQ_LEASES;
        LOGINF $L{'ADMIN.OK_EXIT'};
        exit;
         
@@ -436,10 +452,15 @@ if ($do eq "check_config")
            my $temp_use        =lc(quotemeta(param('DNSMASQ_USE')));
            $temp_use = $DNSMASQ_USE if $temp_use eq "";
 
+           my $temp_sort       =lc(quotemeta(param('SORT_BY_IP')));
+           $temp_sort = $SORT_BY_IP if $temp_sort eq "";
+
            LOGDEB "temp_controlport: ".$temp_controlport;
            LOGDEB "temp_use: ".$temp_use;
+		   LOGDEB "temp_sort: ".$temp_sort;
            $plugin_cfg->param('CONTROL_PORT', $temp_controlport);
            $plugin_cfg->param('DNSMASQ_USE',  $temp_use);
+		   $plugin_cfg->param('SORT_BY_IP',  $temp_sort);
            $plugin_cfg->save();
            open($handle, '>', $dnsmasqconfigfile) or die "Could not open '$dnsmasqconfigfile' $!";
            print $handle decode_base64( param('cfg_stream') );
@@ -615,10 +636,11 @@ if ($do eq "check_config")
 	$maintemplate->param( "LOGLEVEL" 		, "?" ) if ( $plugin->{PLUGINDB_LOGLEVEL} eq "" );
 	$maintemplate->param( "LOGFILE" 		, $currentlogfile);
 	$maintemplate->param( "LBPPLUGINDIR"	, $lbpplugindir );
-	$maintemplate->param( "CONTROL_PORT" 		, $CONTROL_PORT);
-	$maintemplate->param( "DNSMASQ_USE" 		, $DNSMASQ_USE);
-	$maintemplate->param( "DNSMASQ_HOSTS" 		, $DNSMASQ_HOSTS);
-	$maintemplate->param( "DNSMASQ_CFG" 		, $DNSMASQ_CFG);
+	$maintemplate->param( "CONTROL_PORT" 	, $CONTROL_PORT);
+	$maintemplate->param( "DNSMASQ_USE" 	, $DNSMASQ_USE);
+	$maintemplate->param( "SORT_BY_IP" 		, $SORT_BY_IP);
+	$maintemplate->param( "DNSMASQ_HOSTS" 	, $DNSMASQ_HOSTS);
+	$maintemplate->param( "DNSMASQ_CFG" 	, $DNSMASQ_CFG);
 	print $maintemplate->output();
 	LoxBerry::Web::lbfooter();
    LOGINF $L{'ADMIN.OK_EXIT'};
