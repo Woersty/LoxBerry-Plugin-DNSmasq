@@ -21,12 +21,33 @@ PATH=$PATH.":REPLACELBHOMEDIR/sbin"
 
 logfile="REPLACELBPLOGDIR/DNSmasq.log"
 INPUTFILE="/etc/init.d/dnsmasq"
+UPGRADEINPUTFILE="/etc/init.de/dnsmaq.dpkg-dist"
 BACKUPFILE="REPLACELBPCONFIGDIR/DNSmasq_dnsmasq_init.backup"
 plugdnsmasq="REPLACELBPCONFIGDIR/DNSmasq_dnsmasq.cfg"
 plugleasefile="REPLACELBPCONFIGDIR/DNSmasq_leases.cfg"
 plughostsfile="REPLACELBPCONFIGDIR/DNSmasq_hosts.cfg"
 plugconfigfile="REPLACELBPCONFIGDIR/DNSmasq.cfg"
 flagfile="REPLACELBPCONFIGDIR/modify.me"
+
+if [ -r $UPGRADEINPUTFILE ]
+then
+	echo `date +"%b  %e %H:%M:%S "`"$UPGRADEINPUTFILE found. Replacing $INPUTFILE."   							                                                        2>&1 >>$logfile
+	if [ -r $INPUTFILE ]
+	then
+		echo `date +"%b  %e %H:%M:%S "`"$INPUTFILE found. Checking if backup exists."   						                                                        2>&1 >>$logfile
+		if [ -r REPLACELBPCONFIGDIR/$INPUTFILE.old ]
+		then
+			echo `date +"%b  %e %H:%M:%S "`"REPLACELBPCONFIGDIR/$INPUTFILE.old found. Do not backup $INPUTFILE."                                                        2>&1 >>$logfile
+		else
+			echo `date +"%b  %e %H:%M:%S "`"Backup not found. Copy $INPUTFILE to REPLACELBPCONFIGDIR/$INPUTFILE.old."                                                   2>&1 >>$logfile
+			/bin/cp $INPUTFILE REPLACELBPCONFIGDIR/$INPUTFILE.old                                                     													2>&1 >>$logfile
+		fi
+	fi
+	echo `date +"%b  %e %H:%M:%S "`"Moving $UPGRADEINPUTFILE to $INPUTFILE"												                                                2>&1 >>$logfile
+	/bin/mv $UPGRADEINPUTFILE $INPUTFILE                 																												2>&1 >>$logfile
+	echo `date +"%b  %e %H:%M:%S "`"Reset modification flag $flagfile" 													                                                2>&1 >>$logfile
+	touch $flagfile																																						2>&1 >>$logfile
+fi
 
 if [ -r $flagfile ]
 then
@@ -59,7 +80,7 @@ then
    cp $INPUTFILE $BACKUPFILE                                                                                                                                            2>&1 >>$logfile
    echo `date +"%b  %e %H:%M:%S "`"Enable DNS Service for other Subnets than local Subnet, too."                                                                        2>&1 >>$logfile
    /bin/sed -i 's/--local-service//g' $INPUTFILE
-   LINENUM=$((`grep 'RESOLV_CONF=/var/run/dnsmasq/resolv.conf' $INPUTFILE -n|head -n1|cut -d: -f1` + 2))
+   LINENUM=$((`grep '### END INIT INFO' $INPUTFILE -n|head -n1|cut -d: -f1` + 2))
    LINESTR="\n#### Start LoxBerry-Plugin DNSmasq\n if [ -r "$plugdnsmasq" ] \n then \n dnsmasq --test --dhcp-leasefile=$plugleasefile --log-facility=$logfile --addn-hosts=$plughostsfile --conf-file=$plugdnsmasq >>$logfile 2>&1 \n if [ \$? -eq 0 ]\n then \n  echo $plugdnsmasq is VALID and used!! \n   DNSMASQ_OPTS=\"\$DNSMASQ_OPTS --dhcp-leasefile=$plugleasefile --log-facility=$logfile --addn-hosts=$plughostsfile --conf-file=$plugdnsmasq\"\n else \n echo $plugdnsmasq is INVALID and NOT used!! \n  fi \n fi \n#### End LoxBerry-Plugin DNSmasq\n"
    echo `date +"%b  %e %H:%M:%S "`"Remove older /tmp/LoxBerry_DNSmasq_plugin_tmp file if existent "                                                                     2>&1 >>$logfile
    rm -f /tmp/LoxBerry_DNSmasq_plugin_tmp                                                                                                                               2>&1 >>$logfile
